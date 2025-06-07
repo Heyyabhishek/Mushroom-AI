@@ -40,13 +40,12 @@ def SetMicrophoneStatus(Command):
     with open(rf'{TempDirPath}\mic.data', "w", encoding='utf-8') as file:
         file.write(Command)
 
-def GetMicrophoneStatus():
-    with open(rf'{TempDirPath}\Mic.data', "r", encoding='utf-8') as file:
-        Status = file.read()
-    return Status
+def SetMicrophoneStatus(Command):
+    with open(rf'{TempDirPath}\Mic.data', "w", encoding='utf-8') as file:  # fixed 'mic.data' to 'Mic.data'
+        file.write(Command)
 
-def SetAssistantStatus(Status):  # Fixed: changed parameter name from 'Command' to 'Status'
-    with open(rf'{TempDirPath}\mic.data', "w", encoding='utf-8') as file:
+def SetAssistantStatus(Status):
+    with open(rf'{TempDirPath}\Mic.data', "w", encoding='utf-8') as file:
         file.write(Status)
 
 def GetAssistantStatus():
@@ -54,7 +53,7 @@ def GetAssistantStatus():
         Status = file.read()
     return Status
 
-def MicButtonInitialed():
+def MicButtonInitialized():
     SetMicrophoneStatus("False")
 
 def MicButtonClosed():
@@ -185,12 +184,11 @@ class ChatSection(QWidget):
 
     def toggle_icon(self, event=None):
         if self.toggled:
-            self.load_icon(GraphicDirectoryPath('voice.png'), 60, 60)
-            MicButtonInitialed()
-        else:
-            self.load_icon(GraphicDirectoryPath('mic.png'), 60, 60)
+            self.load_icon(GraphicDirectoryPath('Mic_off.png'), 60, 60)
             MicButtonClosed()
-        self.toggled = not self.toggled
+        else:
+            self.load_icon(GraphicDirectoryPath('Mic_on.png'), 60, 60)
+            MicButtonInitialized()
 
     def addMessage(self, message, color):
         cursor = self.chat_text_edit.textCursor()
